@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-labelledby="t d">
+  <title id="t">Pressure-Proof</title>
+  <desc id="d">A win-probability line through the last overs of a chase. Pink dots mark pressure balls, where the match could still go either way.</desc>
+  <style>
+    .ttl { font: 700 64px Georgia, "Times New Roman", serif; fill: #1c1c1c; }
+    .tag { font: italic 24px Georgia, "Times New Roman", serif; fill: #444; }
+    .lab { font: 15px Georgia, "Times New Roman", serif; fill: #777; }
+    .wp  { fill: none; stroke: #1c1c1c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+           stroke-dasharray: 1400; animation: draw 4.5s ease-out 0.3s both; }
+    .dot { fill: #ea1a85; transform-box: fill-box; transform-origin: center; animation: pop 4.5s ease-out both; }
+    .d1 { animation-delay: 2.1s; } .d2 { animation-delay: 2.6s; } .d3 { animation-delay: 3.1s; } .d4 { animation-delay: 3.6s; } .d5 { animation-delay: 4.1s; }
+    .ring { fill: none; stroke: #ea1a85; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ring 2.4s ease-out 4.6s infinite; }
+    @keyframes draw { from { stroke-dashoffset: 1400; } to { stroke-dashoffset: 0; } }
+    @keyframes pop  { 0% { transform: scale(0); } 6% { transform: scale(1.4); } 10%, 100% { transform: scale(1); } }
+    @keyframes ring { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(3.2); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .wp, .dot, .ring { animation: none; } }
+  </style>
+  <clipPath id="card"><rect x="0" y="0" width="1200" height="340" rx="18"/></clipPath>
+  <g clip-path="url(#card)">
+    <rect x="0" y="0" width="1200" height="340" fill="#faf8f5"/>
+    <rect x="0" y="0" width="744" height="8" fill="#ea1a85"/>
+    <rect x="744" y="0" width="456" height="8" fill="#254aa5"/>
+  </g>
+
+  <text x="64" y="128" class="ttl">Pressure-Proof</text>
+  <text x="64" y="172" class="tag">Who still delivers when a T20 match</text>
+  <text x="64" y="204" class="tag">can go either way.</text>
+  <text x="64" y="290" class="lab">SupeRR Selector Season 2  ·  methodology code</text>
+
+  <!-- win chance of the chasing side, last overs -->
+  <g transform="translate(640 60)">
+    <rect x="0" y="0" width="496" height="230" fill="#ea1a85" opacity="0.07"/>
+    <line x1="0" y1="34" x2="496" y2="34" stroke="#ccc" stroke-dasharray="4 5"/>
+    <line x1="0" y1="196" x2="496" y2="196" stroke="#ccc" stroke-dasharray="4 5"/>
+    <text x="500" y="38" class="lab" font-size="13">85%</text>
+    <text x="500" y="200" class="lab" font-size="13">15%</text>
+    <text x="0" y="252" class="lab" font-size="13">win chance, ball by ball</text>
+    <path class="wp" d="M0,150 L40,142 L80,155 L120,128 L160,120 L200,138 L240,96 L280,112 L320,84 L350,140 L380,118 L410,160 L440,92 L470,70 L496,8"/>
+    <circle class="dot d1" cx="240" cy="96" r="7"/>
+    <circle class="dot d2" cx="350" cy="140" r="7"/>
+    <circle class="dot d3" cx="410" cy="160" r="7"/>
+    <circle class="dot d4" cx="440" cy="92" r="7"/>
+    <circle class="dot d5" cx="470" cy="70" r="7"/>
+    <circle class="ring" cx="470" cy="70" r="7"/>
+  </g>
+</svg>

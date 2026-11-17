@@ -1,0 +1,16 @@
+# Public repo = code only. Everything is ignored unless listed below.
+# Only the code is tracked.
+/*
+!/.gitignore
+!/README.md
+!/requirements.txt
+!/run_all.py
+!/src/
+!/assets/
+
+__pycache__/
+*.pyc
+*.csv
+*.parquet
+*.json
+*.zip
