@@ -81,7 +81,7 @@ def fig_quadrant(t, role):
     lim = [min(t.base_v_post.min(), t.press_v_post.min()) - .02, max(t.base_v_post.max(), t.press_v_post.max()) + .02]
     ax.plot(lim, lim, color=NAVY, ls="--", lw=.8)
     ax.text(lim[1], lim[1], "same under pressure\nas usual", ha="right", va="top", fontsize=7, color=NAVY)
-    ax.set(xlabel="usual level, same overs (value per ball)", ylabel="pressure level (value per ball)", title=f"{'Batters' if role == 'bat' else 'Bowlers'}: usual level vs pressure level\n(dot size = pressure balls)")
+    ax.set(xlabel="usual level, same phases (value per ball)", ylabel="pressure level (value per ball)", title=f"{'Batters' if role == 'bat' else 'Bowlers'}: usual level vs pressure level\n(dot size = pressure balls)")
     fig.tight_layout(); fig.savefig(FIG / f"quadrant_{role}.png", bbox_inches="tight"); plt.close(fig)
 
 

@@ -37,8 +37,8 @@ flowchart LR
 1. **Match states.** One row per ball: score, wickets, balls left, target, team strength (Elo) and how the venue usually scores.
 2. **Win model.** Two LightGBM models (batting first, chasing) give the win chance before every ball. Each match is scored by a model that never saw it. The *pressure score* is how far that chance can move on the next ball, compared with an average ball. A pressure ball is **winnable** (15–85%) and **tough** (top 15% of pressure scores).
 3. **Ball value.** Each outcome gets its average worth in that kind of situation, an idea called linear weights in baseball. There are credit rules for wides, byes and run-outs, and a small adjustment for opponent quality.
-4. **Player record.** Each player gets a pressure record, plus a usual level from the *same overs* (so a finisher is compared with his own death overs). Small samples are pulled toward the average.
-5. **Rating and checks.** Both parts are weighted equally, and players are ranked on a cautious rating from 300 match resamples. This stage also runs the checks:
+4. **Player record.** Each player gets a pressure record, plus a usual level from the *same phases* (powerplay, middle, death), so a finisher is compared with his own death overs. Small samples are pulled toward the average.
+5. **Rating and checks.** Both parts are weighted equally, and players are ranked on a cautious rating: the rating minus 0.674 times its spread across 300 match resamples. This stage also runs the checks:
    - a clock test using ball timestamps
    - a split-half repeatability test
    - a forecast test, trained on 2022–24 and scored on 2025–26

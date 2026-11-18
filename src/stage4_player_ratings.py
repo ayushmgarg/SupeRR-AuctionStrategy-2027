@@ -78,7 +78,9 @@ def components(a: pd.DataFrame, mult: pd.Series | None = None) -> pd.DataFrame:
     pm = P.groupby(["pid", "match_id"])[SUMS].sum().reset_index()
     rv, rw = _ratio(pm, "sv"), _ratio(pm, "sw")
     c = pd.DataFrame({"n_p": rv.N, "m_p": rv.M, "press_v": rv.x, "var_press": rv["var"], "press_w": rw.x, "var_w": rw["var"]})
-    c["consistency"] = (pm[pm.n >= 3].assign(pos=lambda d: d.sw > 0).groupby("pid").pos.mean()).reindex(c.index)
+    # "matches helped": among matches with 3+ credited pressure balls, the share where those balls added win value
+    q = pm[pm.n >= 3].assign(pos=lambda d: d.sw > 0).groupby("pid").pos
+    c["consistency"], c["m_helped"], c["m_counted"] = q.mean().reindex(c.index), q.sum().reindex(c.index), q.size().reindex(c.index)
     tot = pm.groupby("pid")[["n", "n_resc", "sv_resc", "sv_close"]].sum()
     c["n_rescue"], c["n_close"] = tot.n_resc, tot.n - tot.n_resc
     c["rescue_v"], c["close_v"] = tot.sv_resc / tot.n_resc.replace(0, np.nan), tot.sv_close / (tot.n - tot.n_resc).replace(0, np.nan)

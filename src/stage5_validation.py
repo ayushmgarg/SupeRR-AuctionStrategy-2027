@@ -155,7 +155,9 @@ def scorecard(b: pd.DataFrame, role: str) -> pd.DataFrame:
         f = lambda x: x.groupby(k).runs.sum() / x.groupby(k).size() * 100
         return pd.DataFrame({"death strike rate": f(d[d.phase == "death"]).where(d[d.phase == "death"].groupby(k).size() >= 60), "overall strike rate": f(d),
                              "pressure strike rate": f(d[d.P]), "batting average": d.groupby(k).runs.sum() / d.groupby(k).striker_out.sum().replace(0, np.nan)})
-    f = lambda x: -(x.groupby(k).tot.sum() / x.groupby(k).legal.sum() * 6)
+    # scorecard economy: runs charged to the bowler (byes and leg-byes excluded) per legal ball, times six
+    b = b.assign(conceded=b.tot - np.where(b.extras_type.isin(["byes", "legbyes"]), b.extras1_runs, 0))
+    f = lambda x: -(x.groupby(k).conceded.sum() / x.groupby(k).legal.sum() * 6)
     return pd.DataFrame({"death economy": f(b[b.phase == "death"]).where(b[b.phase == "death"].groupby(k).legal.sum() >= 60), "overall economy": f(b), "pressure economy": f(b[b.P]),
                          "bowling strike rate": -(b.groupby(k).legal.sum() / (b.is_wicket & ~b.runout).groupby(b[k]).sum().replace(0, np.nan))})
 
@@ -235,7 +237,8 @@ def stability(a: pd.DataFrame, c: pd.DataFrame, w: dict, tau: dict, reps: int) -
 
 def ranked(b: pd.DataFrame, role: str, reps: int = 300) -> tuple[pd.DataFrame, pd.DataFrame, dict, dict]:
     """The whole ranking for one role: components, shrinkage, equal-weight rating standardised on the
-    eligible pool, and the conservative rating (the level we are 75% sure the player is above)."""
+    eligible pool, and the conservative rating: rating - 0.674 x its resampled spread (about the level the
+    player clears in 75% of resamples if the spread is roughly normal)."""
     a = match_agg(b, role)
     c, taus = shrink(components(a))
     w = equal_model(c[pool(c)])
